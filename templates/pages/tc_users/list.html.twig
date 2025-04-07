@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+  Utilisateurs
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+      {% if not tc_users_list.items is same as ([]) %}
+        <h1>Utilisateurs traccar</h1>
+
+        {% for message in app.flashes('success') %}
+          <div class="alert alert-success mt-4">
+            {{message}}
+          </div> 
+        {% endfor %}
+        
+        <table class="table table-dark">
+            <thead>
+                <tr>
+                  <th class="text-center" scope="col">Id</th>
+                  <th class="text-center" scope="col">Nom</th>
+                  <th class="text-center" scope="col">Email</th>                    
+                  <th class="text-center" scope="col">Action</th>
+                </tr>
+            </thead>
+            <tbody>      
+              {% for user in tc_users_list %}
+                <tr class='table-primary'>
+                  <th scope="row">{{ user.id }}</td>
+                  <td>{{ user.name }}</td>
+                  <td>{{ user.email }}</td>                
+                  <td>             
+                    Editer   
+                  </td>        
+                </tr>
+              {% endfor %}
+            </tbody>
+        </table>
+        {# display navigation#}
+        <div class="navigation d-flex justify-content-center">
+            {{ knp_pagination_render(tc_users_list) }}
+        </div> 
+      {% else %}
+        <h4> Pas d'utilisateur </h4>
+      {% endif %}
+    </div>                          
+{% endblock %}
