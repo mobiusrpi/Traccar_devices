@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Repository\Tc_usersRepository;
+use App\Repository\TcUsersRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,7 +13,7 @@ final class UsersTraccarController extends AbstractController
 {
 
     #[Route(path :'/users', name: 'tc_users.list', methods:['GET'])]
-    public function list(Tc_usersRepository $repository, PaginatorInterface $paginator,   
+    public function list(TcUsersRepository $repository, PaginatorInterface $paginator,   
     Request $request): Response
     {
         $usersTraccar = $paginator->paginate(

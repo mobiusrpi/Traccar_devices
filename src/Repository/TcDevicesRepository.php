@@ -2,21 +2,30 @@
 
 namespace App\Repository;
 
-use App\Entity\Tc_devices;
+use App\Entity\TcDevices;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @extends ServiceEntityRepository<Name>
  */
-class Tc_devicesRepository extends ServiceEntityRepository
+class TcDevicesRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Tc_devices::class);
+        parent::__construct($registry, TcDevices::class);
     }
 
-    //    /**
+    public function getUsersFromDevice(): array
+    {
+         return $this->createQuerybuilder('device')
+            ->select('device','users',)
+            ->leftjoin('device.users', 'users')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+   //    /**
     //     * @return Name[] Returns an array of Name objects
     //     */
     //    public function findByExampleField($value): array

@@ -22,19 +22,22 @@
                   <th class="text-center" scope="col">Nom</th>
                   <th class="text-center" scope="col">Ident</th>                    
                   <th class="text-center" scope="col">NomRef</th>
-                  <th class="text-center" scope="col">Type</th>                   <th class="text-center" scope="col">Action</th>
+                  <th class="text-center" scope="col">Type</th>                  
+                  <th class="text-center" scope="col">Utilisateur</th>                   
+                  <th class="text-center" scope="col">Action</th>
                 </tr>
             </thead>
-            <tbody>      
-              {% for user in tc_devices_list %}
+            <tbody>     
+              {% for device in tc_devices_list %}
                 <tr class='table-primary'>
-                  <th scope="row">{{ user.id }}</td>
-                  <td>{{ user.name }}</td>
-                  <td>{{ user.uniqueid }}</td>                
-                  <td>{{ user.phone }}</td>
-                  <td>{{ user.model }}</td>                
+                  <th scope="row">{{ device.id }}</td>
+                  <td>{{ device.name }}</td>
+                  <td>{{ device.uniqueid }}</td>                
+                  <td>{{ device.phone }}</td>
+                  <td>{{ device.model }}</td>                     
+                  <td>{{ users[device.id-1].users[0].name }}</td>                
                   <td>             
-                    Editer   
+                      <a href="{{ path('tc_devices.edit', {'id': device.id}) }}" class= 'btn btn-warning btn-sm'>Attribuer</a>            
                   </td>        
                 </tr>
               {% endfor %}
