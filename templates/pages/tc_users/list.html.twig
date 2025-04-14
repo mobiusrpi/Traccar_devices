@@ -6,7 +6,7 @@
 
 {% block body %}
     <div class="container mt-4">
-      {% if not tc_users_list.items is same as ([]) %}
+      {% if not pagination.items is same as ([]) %}
         <h1>Utilisateurs traccar</h1>
 
         {% for message in app.flashes('success') %}
@@ -25,7 +25,7 @@
                 </tr>
             </thead>
             <tbody>      
-              {% for user in tc_users_list %}
+              {% for user in pagination %}
                 <tr class='table-primary'>
                   <th scope="row">{{ user.id }}</td>
                   <td>{{ user.name }}</td>
@@ -39,7 +39,7 @@
         </table>
         {# display navigation#}
         <div class="navigation d-flex justify-content-center">
-            {{ knp_pagination_render(tc_users_list) }}
+            {{ knp_pagination_render(pagination) }}
         </div> 
       {% else %}
         <h4> Pas d'utilisateur </h4>

@@ -1,12 +1,15 @@
-% extends 'base.html.twig' %}
+{% extends 'base.html.twig' %}
 
 {% block title %}Edit Devices{% endblock %}
 
-{% block body %}
-    <h1>Edit TcUsers</h1>
-        {{ form_start(form) }}
-            {{ form_widget(form) }}
-            <button class="btn">{{ button_label|default('Valider') }}</button>
-        {{ form_end(form) }}
+{% block body %}  
+    <div class 'container mt-4'>
+        <h1>Attribuer un tracker</h1>
 
-{% endblock %}
+        <p class="fw-bold mt-4" >Etiquette tracker : {{ tc_device.model }}</p>       
+
+        {{ form_start(form) }}
+            {{ form(form) }}
+        {{ form_end(form) }}
+    </div>
+{% endblock %}    

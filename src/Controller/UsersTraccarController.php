@@ -16,14 +16,14 @@ final class UsersTraccarController extends AbstractController
     public function list(TcUsersRepository $repository, PaginatorInterface $paginator,   
     Request $request): Response
     {
-        $usersTraccar = $paginator->paginate(
+        $pagination = $paginator->paginate(
             $repository->findAll(),
             $request->query->getInt('page', 1), 
             20 
         );
 
         return $this->render('pages/tc_users/list.html.twig', [
-             'tc_users_list' => $usersTraccar
+             'pagination' => $pagination
         ]);
     }
 }

@@ -6,6 +6,7 @@ use App\Entity\TcDevices;
 use App\Form\TcDevicesType;
 use App\Repository\TcDevicesRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,19 +17,24 @@ final class DevicesTraccarController extends AbstractController
 {
 
     #[Route(path :'/devices', name: 'tc_devices.list', methods:['GET'])]
-    public function list(TcDevicesRepository $repository, PaginatorInterface $paginator,   
-    Request $request): Response
-    {
-        $devicesTraccar = $paginator->paginate(
-            $repository->findAll(),
-            $request->query->getInt('page', 1), 
-            20 
-        );
+    public function list(
+        ManagerRegistry $doctrine,
+        PaginatorInterface $paginator,          
+        TcDevicesRepository $repository,  
+        Request $request
+        ): Response{
+            $entityManager = $doctrine->getManager('default');          
+            $repositoryB = $entityManager->getRepository(TcDevices::class);
+            $pagination = $paginator->paginate(
+                $repositoryB->findAll(),
+                $request->query->getInt('page', 1), 
+                15 
+            );
 
         $users = $repository->getUsersFromDevice();
-//dd($users);
+
         return $this->render('pages/tc_devices/list.html.twig', [
-             'tc_devices_list' => $devicesTraccar,
+             'pagination' => $pagination,
              'users' => $users
         ]);
     }

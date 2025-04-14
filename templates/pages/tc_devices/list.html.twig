@@ -6,9 +6,11 @@
 
 {% block body %}
     <div class="container mt-4">
-      {% if not tc_devices_list.items is same as ([]) %}
+      {% if not pagination.items is same as ([]) %}
         <h1>Tracker Traccar</h1>
-
+<div class="total-items">
+    Total d'articles : {{ pagination.getTotalItemCount }}
+</div>
         {% for message in app.flashes('success') %}
           <div class="alert alert-success mt-4">
             {{message}}
@@ -18,34 +20,35 @@
         <table class="table table-dark">
             <thead>
                 <tr>
-                  <th class="text-center" scope="col">Id</th>
-                  <th class="text-center" scope="col">Nom</th>
-                  <th class="text-center" scope="col">Ident</th>                    
-                  <th class="text-center" scope="col">NomRef</th>
-                  <th class="text-center" scope="col">Type</th>                  
-                  <th class="text-center" scope="col">Utilisateur</th>                   
+                  <th class="text-center" scope="col">Tracker</th>
+                  <th class="text-center" scope="col">Ident</th>                                             
+                  <th class="text-center" scope="col">Pilote</th> 
+                  <th class="text-center" scope="col">Propriétaire</th>                                     
                   <th class="text-center" scope="col">Action</th>
                 </tr>
             </thead>
             <tbody>     
-              {% for device in tc_devices_list %}
+              {% for device in pagination %}
                 <tr class='table-primary'>
-                  <th scope="row">{{ device.id }}</td>
-                  <td>{{ device.name }}</td>
-                  <td>{{ device.uniqueid }}</td>                
-                  <td>{{ device.phone }}</td>
-                  <td>{{ device.model }}</td>                     
-                  <td>{{ users[device.id-1].users[0].name }}</td>                
+                  <th scope="row">{{ device.model }}</td>
+                  <td>{{ device.uniqueid }}</td>                                   
+                  <td>{{ device.name }}</td>                  
+                  <td>{% for user in users %}
+                        {% if user.id == device.id %} 
+                            {{ user.users[0].name }}
+                        {% endif %}
+                    {% endfor %}
+                  </td>
                   <td>             
                       <a href="{{ path('tc_devices.edit', {'id': device.id}) }}" class= 'btn btn-warning btn-sm'>Attribuer</a>            
                   </td>        
                 </tr>
               {% endfor %}
             </tbody>
-        </table>
+        </table>      
         {# display navigation#}
         <div class="navigation d-flex justify-content-center">
-            {{ knp_pagination_render(tc_devices_list) }}
+            {{ knp_pagination_render(pagination) }}
         </div> 
       {% else %}
         <h4> Pas d'utilisateur </h4>
